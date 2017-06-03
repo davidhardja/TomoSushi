@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.david.sushi.Adapter.BillAdapter;
 import com.example.david.sushi.Common.Constant;
+import com.example.david.sushi.Database.Data.CallbackWrapper;
 import com.example.david.sushi.Database.Data.Menus;
 
 import java.text.MessageFormat;
@@ -20,6 +21,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by David on 24/03/2017.
@@ -68,8 +72,22 @@ public class BillActivity extends BaseActivity {
             public void onClick(View v) {
                 Constant.cart.clear();
                 Constant.bill.clear();
-                Constant.mainActivity.finish();
-                finish();
+                Call<CallbackWrapper> closeCall = getService().closeOrder("status","4","1");
+                closeCall.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        if(response.isSuccessful()){
+                            Constant.mainActivity.finish();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
+
             }
         });
 
