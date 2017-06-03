@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.david.sushi.Adapter.OrderAdapter;
 import com.example.david.sushi.Common.Constant;
+import com.example.david.sushi.Database.Data.CallbackWrapper;
+import com.example.david.sushi.Database.Data.Data;
 import com.example.david.sushi.Database.Data.Menus;
 
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by David on 02/04/2017.
@@ -74,7 +80,31 @@ public class OrderActivity extends BaseActivity {
 
     private void setView() {
         menusList.clear();
-        menusList.addAll(Constant.bill);
+        //menusList.addAll(Constant.bill);
+
+        Call<CallbackWrapper> orderCall = getService().getOrder("1");
+        orderCall.enqueue(new Callback<CallbackWrapper>() {
+            @Override
+            public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                if(response.isSuccessful()){
+                    List<Data> dataList = response.body().getData();
+
+                    for(int i=0;i<dataList.size();i++){
+                        Menus menu = new Menus();
+                        menu.setName(dataList.get(i).getNama());
+                        menu.setQuantity(Integer.valueOf(dataList.get(i).getQty()));
+                        menu.setHarga(Integer.valueOf(dataList.get(i).getHarga()));
+                        menusList.add(menu);
+                    }
+                }
+                orderAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+            }
+        });
 
         if (orderAdapter == null) {
             orderAdapter = new OrderAdapter(this, menusList);

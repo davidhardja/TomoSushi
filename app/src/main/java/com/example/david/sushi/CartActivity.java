@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.david.sushi.Adapter.CartAdapter;
 import com.example.david.sushi.Common.Constant;
+import com.example.david.sushi.Database.Data.CallbackWrapper;
 import com.example.david.sushi.Database.Data.Menus;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by David on 23/03/2017.
@@ -81,12 +85,20 @@ public class CartActivity extends BaseActivity {
         rvCart.setAdapter(cartAdapter);
     }
 
+    int totalQty = 0;
+    String idMenu ="";
+    String qty = "";
+    String creator = "Meja 1";
+    String idMeja = "1";
+
     private void showProcess() {
         final Dialog dialog = new Dialog(this, R.style.StyleDialog);
         dialog.setContentView(R.layout.layout_dialog_order);
         TextView tvOrder = (TextView) dialog.findViewById(R.id.tv_order);
         Button bOk = (Button) dialog.findViewById(R.id.b_ok);
         Button bNo = (Button) dialog.findViewById(R.id.b_no);
+
+
 
         customizeFonts(tvOrder);
         bOk.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +118,37 @@ public class CartActivity extends BaseActivity {
                     }
                 }
 
+                for (int i=0;i<menusList.size();i++){
+                    totalQty = totalQty+ menusList.get(i).getQuantity();
+                    idMenu = idMenu+menusList.get(i).getId() +"||";
+                    qty = qty+ menusList.get(i).getQuantity()+"||";
+                }
+
+                System.out.println("CHECK PARAMETER: "+ totalQty);
+                System.out.println("CHECK PARAMETER: "+ idMenu);
+                System.out.println("CHECK PARAMETER: "+ qty);
+
+
+                Call<CallbackWrapper> orderCall = getService().postOrder(idMeja,String.valueOf(totalQty),creator,idMenu,qty);
+                orderCall.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("RESPONSE: "+ response.body());
+                        }else{
+                            System.out.println("RESPONSE ERROR: "+ response.errorBody());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
                 Constant.cart.clear();
                 menusList.clear();
+
+
 
                 dialog.dismiss();
                 CartActivity.this.finish();

@@ -18,11 +18,28 @@ public class Data extends BaseDao {
     private String harga;
     private String Id_category_menu;
     private String Keterangan;
-
+    private String qty;
     private String picture_url;
 
     //===Data Category===//
     private String id_parent;
+
+
+    public String getQty() {
+        return qty;
+    }
+
+    public void setQty(String qty) {
+        this.qty = qty;
+    }
+
+    public String getId_parent() {
+        return id_parent;
+    }
+
+    public void setId_parent(String id_parent) {
+        this.id_parent = id_parent;
+    }
 
     public String getId() {
         return id;
