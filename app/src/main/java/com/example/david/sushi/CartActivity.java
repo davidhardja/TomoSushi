@@ -89,7 +89,6 @@ public class CartActivity extends BaseActivity {
     String idMenu ="";
     String qty = "";
     String creator = "Meja 1";
-    String idMeja = "1";
 
     private void showProcess() {
         final Dialog dialog = new Dialog(this, R.style.StyleDialog);
@@ -129,7 +128,7 @@ public class CartActivity extends BaseActivity {
                 System.out.println("CHECK PARAMETER: "+ qty);
 
 
-                Call<CallbackWrapper> orderCall = getService().postOrder(idMeja,String.valueOf(totalQty),creator,idMenu,qty);
+                Call<CallbackWrapper> orderCall = getService().postOrder(getSession().getNoMeja(),String.valueOf(totalQty),creator,idMenu,qty);
                 orderCall.enqueue(new Callback<CallbackWrapper>() {
                     @Override
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {

@@ -52,5 +52,14 @@ public interface ApiService {
             @Query("no_meja") String noMeja
     );
 
+    @POST("public/api/login")
+    Call<CallbackWrapper> login(
+            @Query("password") String password
+    );
+
+    @GET("public/api/getbon/{no_meja}")
+    Call<CallbackWrapper> getReceipt(
+            @Path("no_meja") String noMeja
+    );
 
 }

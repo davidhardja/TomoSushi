@@ -1,5 +1,7 @@
 package com.example.david.sushi.Database.Data;
 
+import java.util.List;
+
 /**
  * Created by David on 03/06/2017.
  */
@@ -24,6 +26,7 @@ public class Data extends BaseDao {
     //===Data Category===//
     private String id_parent;
 
+    //===Data Trans===//
 
     public String getQty() {
         return qty;

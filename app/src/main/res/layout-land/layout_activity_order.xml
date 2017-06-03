@@ -126,4 +126,6 @@
         android:textSize="18sp"
         android:text="@string/pay" />
 
+    <include layout="@layout/layout_loading" />
+
 </RelativeLayout>

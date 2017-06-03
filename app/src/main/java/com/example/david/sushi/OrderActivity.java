@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.david.sushi.Adapter.OrderAdapter;
-import com.example.david.sushi.Common.Constant;
 import com.example.david.sushi.Database.Data.CallbackWrapper;
 import com.example.david.sushi.Database.Data.Data;
 import com.example.david.sushi.Database.Data.Menus;
+import com.victor.loading.book.BookLoading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +49,11 @@ public class OrderActivity extends BaseActivity {
     @BindView(R.id.ib_back)
     ImageButton ibBack;
 
+    @BindView(R.id.rl_wrapper_loading)
+    RelativeLayout rlWrapperLoading;
+    @BindView(R.id.rotateloading)
+    BookLoading rlLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,25 +76,24 @@ public class OrderActivity extends BaseActivity {
         bPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Constant.bill.size()>0){
-                    showProcess();
-                }
+                showProcess();
             }
         });
     }
 
     private void setView() {
+        showLoading();
         menusList.clear();
         //menusList.addAll(Constant.bill);
 
-        Call<CallbackWrapper> orderCall = getService().getOrder("1");
+        Call<CallbackWrapper> orderCall = getService().getOrder(getSession().getNoMeja());
         orderCall.enqueue(new Callback<CallbackWrapper>() {
             @Override
             public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Data> dataList = response.body().getData();
 
-                    for(int i=0;i<dataList.size();i++){
+                    for (int i = 0; i < dataList.size(); i++) {
                         Menus menu = new Menus();
                         menu.setName(dataList.get(i).getNama());
                         menu.setQuantity(Integer.valueOf(dataList.get(i).getQty()));
@@ -98,6 +102,7 @@ public class OrderActivity extends BaseActivity {
                     }
                 }
                 orderAdapter.notifyDataSetChanged();
+                hideLoading();
             }
 
             @Override
@@ -112,11 +117,11 @@ public class OrderActivity extends BaseActivity {
         rvCart.setLayoutManager(new LinearLayoutManager(this));
         rvCart.setAdapter(orderAdapter);
 
-        if(Constant.bill.size()==0){
-            bPay.setAlpha(0.4f);
-        }else {
-            bPay.setAlpha(1f);
-        }
+//        if(Constant.bill.size()==0){
+//            bPay.setAlpha(0.4f);
+//        }else {
+//            bPay.setAlpha(1f);
+//        }
     }
 
     private void showProcess() {
@@ -145,5 +150,16 @@ public class OrderActivity extends BaseActivity {
         });
 
         dialog.show();
+    }
+
+    public void showLoading() {
+        rlWrapperLoading.setVisibility(View.VISIBLE);
+        rlLoading.start();
+    }
+
+    public void hideLoading() {
+        rlWrapperLoading.setVisibility(View.GONE);
+        rlLoading.stop();
+
     }
 }

@@ -13,6 +13,15 @@ public class CallbackWrapper {
     private String code;
     private String status;
     private List<Data> data;
+    private DataBon databon;
+
+    public DataBon getDataBon() {
+        return databon;
+    }
+
+    public void setDataBon(DataBon dataBon) {
+        this.databon = dataBon;
+    }
 
     public String getCode() {
         return code;

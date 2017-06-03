@@ -20,6 +20,7 @@ public class SessionManagement {
 
     private static final String KEY_TIMER = "TIMER";
     private static final String KEY_WELCOME = "WELCOME";
+    private static final String NO_MEJA = "NO_MEJA";
 
 
     public SessionManagement(Context context){
@@ -46,6 +47,16 @@ public class SessionManagement {
 
     public String getWelcomeText() {
         return preferences.getString(KEY_WELCOME, _context.getString(R.string.welcome));
+
+    }
+
+    public void setNoMeja(String noMeja) {
+        preferences.edit().putString(NO_MEJA, noMeja).apply();
+        editor.commit();
+    }
+
+    public String getNoMeja() {
+        return preferences.getString(NO_MEJA,Constant.ID_MEJA);
 
     }
 }

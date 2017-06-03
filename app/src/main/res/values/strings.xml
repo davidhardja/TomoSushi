@@ -27,11 +27,17 @@
     <string name="total">Total</string>
     <string name="pay">Pay</string>
     <string name="rupiah">Rp {0}</string>
+    <string name="persen">{0}%</string>
+    <string name="diskon">Diskon: {0}</string>
+    <string name="total_harga">Total: {0}</string>
+    <string name="grand_total_harga">Grand Total: {0}</string>
+    <string name="ppn">Ppn: {0}</string>
     <string name="exit">exit</string>
     <string name="note">Exp: less ice</string>
     <string name="checkout">Checkout</string>
     <string name="setting">Setting</string>
     <string name="base_url">Base Url</string>
+    <string name="no_meja">No. Meja: {0}</string>
     <string name="save">Save</string>
     <string name="timer_screensaver">Timer Screensaver</string>
     <string name="back">Back</string>
@@ -41,5 +47,6 @@
     <string name="my_order">My Order</string>
     <string name="in_second">In Second</string>
     <string name="welcome_text">Welcome Text</string>
+    <string name="id_meja">Nomer Meja</string>
 
 </resources>

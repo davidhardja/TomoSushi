@@ -38,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -256,20 +257,33 @@ public class MainActivity extends BaseActivity implements DialogInterface {
         pinLockView.setPinLockListener(new PinLockListener() {
             @Override
             public void onComplete(String s) {
-                if (s.matches("1234")) {
-                    dialog.dismiss();
-                    finish();
-                } else {
-                    YoYo.with(Techniques.Shake)
-                            .duration(500)
-                            .repeat(1).onEnd(new YoYo.AnimatorCallback() {
-                        @Override
-                        public void call(Animator animator) {
-                            pinLockView.resetPinLockView();
+                showLoading();
+                Call<CallbackWrapper> callLogin = getService().login(s);
+                callLogin.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        hideLoading();
+                        if (response.isSuccessful()&&response.body().getCode().equals(Constant.API_SUCCESS)) {
+                            dialog.dismiss();
+                            finish();
+                        } else {
+                            YoYo.with(Techniques.Shake)
+                                    .duration(500)
+                                    .repeat(1).onEnd(new YoYo.AnimatorCallback() {
+                                @Override
+                                public void call(Animator animator) {
+                                    pinLockView.resetPinLockView();
+                                }
+                            })
+                                    .playOn(pinLockView);
                         }
-                    })
-                            .playOn(pinLockView);
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
             }
 
             @Override
@@ -289,17 +303,6 @@ public class MainActivity extends BaseActivity implements DialogInterface {
                 dialog.dismiss();
             }
         });
-
-//        EditText etPassword = (EditText) dialog.findViewById(R.id.et_password);
-//        Button bVerify = (Button) dialog.findViewById(R.id.b_verify);
-//
-//        bVerify.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
         dialog.show();
     }
 
@@ -317,25 +320,6 @@ public class MainActivity extends BaseActivity implements DialogInterface {
     protected void onPause() {
         countDownTimer.cancel();
         super.onPause();
-    }
-
-    private void getMenu() {
-        Call<CallbackWrapper> call = getService().getAllCategory();
-        call.enqueue(new retrofit2.Callback<CallbackWrapper>() {
-            @Override
-            public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                if (response.isSuccessful()) {
-                    System.out.println("RESPONSE SUCCESS: " + response.body().getData().size());
-                } else {
-                    System.out.println("RESPONSE FAILED: " + response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CallbackWrapper> call, Throwable t) {
-                System.out.println("RESPONSE ERROR: " + t.getMessage());
-            }
-        });
     }
 
     @Override

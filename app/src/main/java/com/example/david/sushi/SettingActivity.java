@@ -33,6 +33,10 @@ public class SettingActivity extends BaseActivity {
     TextView tvWelcomeText;
     @BindView(R.id.et_welcome)
     EditText etWelcomeText;
+    @BindView(R.id.tv_id_meja)
+    TextView tvIdMeja;
+    @BindView(R.id.et_no_meja)
+    EditText etNoMeja;
 
     @BindView(R.id.b_save_setting)
     Button bSave;
@@ -54,6 +58,7 @@ public class SettingActivity extends BaseActivity {
         etTimer.setText(String.valueOf(getSession().getTimer()/1000));
         etBaseUrl.setText(Constant.API_URL);
         etWelcomeText.setText(getSession().getWelcomeText());
+        etNoMeja.setText(getSession().getNoMeja());
     }
 
     private void setListener() {
@@ -61,6 +66,7 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 getSession().setWelcomeText(etWelcomeText.getText().toString());
+                getSession().setNoMeja(etNoMeja.getText().toString());
                 getSession().setTimer(Long.valueOf(etTimer.getText().toString())*1000);
                 finish();
             }

@@ -21,8 +21,8 @@ public class Constant {
     public static final String API_URL = "https://projek-it.com/pos/";
 
     // ============== Response Code =========================
-    public static final int API_SUCCESS = 200;
-    public static final int UNAUTHORIZED = 401;
+    public static final String API_SUCCESS = "200";
+    public static final String UNAUTHORIZED = "401";
 
     // ============== Database =====================
     public static String DATABASE_NAME = "Tomo_sushi_database";
@@ -43,4 +43,7 @@ public class Constant {
 
     //Main Activity
     public static MainActivity mainActivity;
+
+    //Id Table
+    public static String ID_MEJA = "1";
 }
