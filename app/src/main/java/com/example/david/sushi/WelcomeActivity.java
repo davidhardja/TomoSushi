@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
@@ -60,7 +61,25 @@ public class WelcomeActivity extends BaseActivity {
         bGoToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToMainPage();
+                Call<CallbackWrapper> call = getService().getMejaStatus(getSession().getNoMeja());
+                call.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getStatus_meja().matches(Constant.AVAILABLE)) {
+                                goToMainPage();
+                            } else {
+                                Toast.makeText(WelcomeActivity.this, getString(R.string.table_not_available),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
             }
         });
 
@@ -82,6 +101,18 @@ public class WelcomeActivity extends BaseActivity {
     private void goToMainPage() {
         Intent intent = new Intent(this, MainActivity.class);
         Constant.mainActivity = null;
+        Call<CallbackWrapper> call = getService().openTable("status","2",getSession().getNoMeja());
+        call.enqueue(new Callback<CallbackWrapper>() {
+            @Override
+            public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+            }
+        });
         //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         //finish();
@@ -113,7 +144,7 @@ public class WelcomeActivity extends BaseActivity {
                 callLogin.enqueue(new Callback<CallbackWrapper>() {
                     @Override
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                        if (response.isSuccessful()&&response.body().getCode().equals(Constant.API_SUCCESS)) {
+                        if (response.isSuccessful() && response.body().getCode().equals(Constant.API_SUCCESS)) {
                             dialog.dismiss();
                             goToSettingPage();
                         } else {

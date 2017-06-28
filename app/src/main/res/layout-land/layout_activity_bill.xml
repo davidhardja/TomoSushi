@@ -214,5 +214,5 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
+    <include layout="@layout/layout_loading" />
 </RelativeLayout>

@@ -64,8 +64,8 @@ public class BillAdapter extends BaseAdapter {
         }
 
         private void bind(Menus menus) {
-            SpannableStringBuilder quantityPrice = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga()));
-            SpannableStringBuilder quantityTotal = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga() * menus.getQuantity()));
+            SpannableStringBuilder quantityPrice = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga()/menus.getQuantity()));
+            SpannableStringBuilder quantityTotal = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga()));
             tvNo.setText(String.valueOf(getAdapterPosition() + 1));
             tvName.setText(menus.getName());
             tvPrice.setText(quantityPrice);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.david.sushi.Adapter.BillAdapter;
@@ -18,6 +19,7 @@ import com.example.david.sushi.Database.Data.Data;
 import com.example.david.sushi.Database.Data.DataBon;
 import com.example.david.sushi.Database.Data.Menus;
 import com.example.david.sushi.Database.Data.Order;
+import com.victor.loading.book.BookLoading;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -66,6 +68,11 @@ public class BillActivity extends BaseActivity {
     @BindView(R.id.ib_back)
     ImageButton ibBack;
 
+    @BindView(R.id.rl_wrapper_loading)
+    RelativeLayout rlWrapperLoading;
+    @BindView(R.id.rotateloading)
+    BookLoading rlLoading;
+
     BillAdapter billAdapter;
     List<Menus> menusList = new ArrayList<>();
 
@@ -86,22 +93,8 @@ public class BillActivity extends BaseActivity {
             public void onClick(View v) {
                 Constant.cart.clear();
                 Constant.bill.clear();
-                Call<CallbackWrapper> closeCall = getService().closeOrder("status","4",getSession().getNoMeja());
-                closeCall.enqueue(new Callback<CallbackWrapper>() {
-                    @Override
-                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
-                        if(response.isSuccessful()){
-                            Constant.mainActivity.finish();
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
-                    }
-                });
-
+                Constant.mainActivity.finish();
+                finish();
             }
         });
 
@@ -120,7 +113,7 @@ public class BillActivity extends BaseActivity {
         menusList.clear();
         //menusList.addAll(Constant.bill);
 
-
+        showLoading();
         Call<CallbackWrapper> call = getService().getReceipt(getSession().getNoMeja());
         call.enqueue(new Callback<CallbackWrapper>() {
             @Override
@@ -138,17 +131,21 @@ public class BillActivity extends BaseActivity {
                         menusList.add(menu);
                     }
                     billAdapter.notifyDataSetChanged();
+                    try{
+                        SpannableStringBuilder builderTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.total_harga), dataBon.getTrans().getTotal()));
+                        tvTotal.setText(builderTotal);
+                        SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), dataBon.getTrans().getGrandtotal()));
+                        tvGrandTotal.setText(builderGrandTotal);
+                        SpannableStringBuilder builderNoMeja = new SpannableStringBuilder(MessageFormat.format(getString(R.string.no_meja),dataBon.getTrans().getNo_meja()));
+                        tvNoMeja.setText(builderNoMeja);
+                        SpannableStringBuilder builderDiskon= new SpannableStringBuilder(MessageFormat.format(getString(R.string.diskon), dataBon.getTrans().getDiskon()));
+                        tvDiskon.setText(builderDiskon);
+                        SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.getTrans().getPpn()));
+                        tvPpn.setText(builderPpn);
+                    }catch (Exception e){
 
-                    SpannableStringBuilder builderTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.total_harga), dataBon.getTrans().getTotal()));
-                    tvTotal.setText(builderTotal);
-                    SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), dataBon.getTrans().getGrandtotal()));
-                    tvGrandTotal.setText(builderGrandTotal);
-                    SpannableStringBuilder builderNoMeja = new SpannableStringBuilder(MessageFormat.format(getString(R.string.no_meja),dataBon.getTrans().getNo_meja()));
-                    tvNoMeja.setText(builderNoMeja);
-                    SpannableStringBuilder builderDiskon= new SpannableStringBuilder(MessageFormat.format(getString(R.string.diskon), dataBon.getTrans().getDiskon()));
-                    tvDiskon.setText(builderDiskon);
-                    SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.getTrans().getPpn()));
-                    tvPpn.setText(builderPpn);
+                    }
+                    hideLoading();
                 }
             }
 
@@ -170,6 +167,16 @@ public class BillActivity extends BaseActivity {
         for (int i = 0; i < menusList.size(); i++) {
             total = total + (menusList.get(i).getQuantity() * menusList.get(i).getHarga());
         }
+    }
+
+    public void showLoading() {
+        rlWrapperLoading.setVisibility(View.VISIBLE);
+        rlLoading.start();
+    }
+
+    public void hideLoading() {
+        rlWrapperLoading.setVisibility(View.GONE);
+        rlLoading.stop();
 
     }
 }

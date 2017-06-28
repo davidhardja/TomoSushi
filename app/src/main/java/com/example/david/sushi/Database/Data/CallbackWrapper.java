@@ -14,6 +14,15 @@ public class CallbackWrapper {
     private String status;
     private List<Data> data;
     private DataBon databon;
+    private String status_meja;
+
+    public String getStatus_meja() {
+        return status_meja;
+    }
+
+    public void setStatus_meja(String status_meja) {
+        this.status_meja = status_meja;
+    }
 
     public DataBon getDataBon() {
         return databon;

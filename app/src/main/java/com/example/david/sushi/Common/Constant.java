@@ -37,7 +37,7 @@ public class Constant {
     public static List<Menus> bill = new ArrayList<>();
 
     //Time Idle
-    public static long START_TIME = 100*1000;
+    public static long START_TIME = 100000*1000;
     public static final long INTERVAL = 1000;
     public static boolean SHOW_SCREENSAVER = true;
 
@@ -46,4 +46,10 @@ public class Constant {
 
     //Id Table
     public static String ID_MEJA = "1";
+
+    //Status Meja
+    public static String AVAILABLE = "1";
+    public static String SEATED = "2";
+    public static String ORDERED = "3";
+    public static String PAYMENT = "4";
 }

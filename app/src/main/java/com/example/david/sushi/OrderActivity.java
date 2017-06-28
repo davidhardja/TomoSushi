@@ -136,9 +136,22 @@ public class OrderActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                Intent intent = new Intent(OrderActivity.this, BillActivity.class);
-                startActivity(intent);
-                OrderActivity.this.finish();
+                Call<CallbackWrapper> closeCall = getService().closeOrder("status","4",getSession().getNoMeja());
+                closeCall.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                        if(response.isSuccessful()){
+                            Intent intent = new Intent(OrderActivity.this, BillActivity.class);
+                            startActivity(intent);
+                            OrderActivity.this.finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
             }
         });
 

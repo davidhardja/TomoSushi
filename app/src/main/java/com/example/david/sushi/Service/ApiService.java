@@ -52,14 +52,31 @@ public interface ApiService {
             @Query("no_meja") String noMeja
     );
 
+    @PUT("public/api/meja")
+    Call<CallbackWrapper> openTable(
+                    @Query("updatedKey") String status,
+                    @Query("updatedValue") String value2,
+                    @Query("no_meja") String noMeja
+            );
+
     @POST("public/api/login")
     Call<CallbackWrapper> login(
             @Query("password") String password
     );
 
-    @GET("public/api/getbon/{no_meja}")
+    @GET("public/api/getbon/{no_meja}/yes")
     Call<CallbackWrapper> getReceipt(
             @Path("no_meja") String noMeja
+    );
+
+    @GET("public/api/cekstatusmeja/{no_meja}")
+    Call<CallbackWrapper> getMejaStatus(
+            @Path("no_meja") String noMeja
+    );
+
+    @GET("public/api/callwaiter/{id}")
+    Call<CallbackWrapper> callWaiter(
+            @Path("id") String noMeja
     );
 
 }

@@ -31,6 +31,7 @@
     <string name="diskon">Diskon: {0}</string>
     <string name="total_harga">Total: {0}</string>
     <string name="grand_total_harga">Grand Total: {0}</string>
+    <string name="table_not_available">Table not Available</string>
     <string name="ppn">Ppn: {0}</string>
     <string name="exit">exit</string>
     <string name="note">Exp: less ice</string>

@@ -26,8 +26,6 @@ public class Data extends BaseDao {
     //===Data Category===//
     private String id_parent;
 
-    //===Data Trans===//
-
     public String getQty() {
         return qty;
     }

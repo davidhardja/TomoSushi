@@ -120,6 +120,18 @@ public class MainActivity extends BaseActivity implements DialogInterface {
             @Override
             public void onClick(View v) {
                 showDialogWaiter();
+                Call<CallbackWrapper> callWaiter = getService().callWaiter(getSession().getNoMeja());
+                callWaiter.enqueue(new Callback<CallbackWrapper>() {
+                    @Override
+                    public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                    }
+                });
             }
         });
     }
@@ -210,6 +222,17 @@ public class MainActivity extends BaseActivity implements DialogInterface {
             }
         };
 
+//        ImageListener imageListener = new ImageListener() {
+//            @Override
+//            public void setImageForPosition(int position, ImageView imageView) {
+//                Glide.with(getApplicationContext())
+//                        .load(mImages.get(position))
+//                        .centerCrop()
+//                        .placeholder(R.drawable.placeholder_image)
+//                        .into(imageView);
+//            }
+//        };
+
         ibClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,8 +287,21 @@ public class MainActivity extends BaseActivity implements DialogInterface {
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
                         hideLoading();
                         if (response.isSuccessful()&&response.body().getCode().equals(Constant.API_SUCCESS)) {
-                            dialog.dismiss();
-                            finish();
+                            Call<CallbackWrapper> call1 = getService().openTable("status","1",getSession().getNoMeja());
+                            call1.enqueue(new Callback<CallbackWrapper>() {
+                                @Override
+                                public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
+                                    if(response.isSuccessful()){
+                                        dialog.dismiss();
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+
+                                }
+                            });
                         } else {
                             YoYo.with(Techniques.Shake)
                                     .duration(500)
