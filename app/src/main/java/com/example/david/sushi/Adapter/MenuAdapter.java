@@ -101,6 +101,9 @@ public class MenuAdapter extends BaseAdapter {
             final Menus menus = menusList.get(getAdapterPosition());
             final Menus temp = new Menus();
 
+            tvName.setText(menus.getName());
+            tvDescription.setText("");
+
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

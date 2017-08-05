@@ -103,11 +103,11 @@ public class OrderActivity extends BaseActivity {
                 }
                 orderAdapter.notifyDataSetChanged();
                 hideLoading();
-            }
+        }
 
             @Override
             public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                hideLoading();
             }
         });
 

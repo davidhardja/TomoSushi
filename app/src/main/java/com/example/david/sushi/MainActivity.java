@@ -158,6 +158,8 @@ public class MainActivity extends BaseActivity implements DialogInterface {
                     vpMenu.setOffscreenPageLimit(dataList.size());
                     stlMenu.setViewPager(vpMenu);
                     hideLoading();
+                }else{
+                    hideLoading();
                 }
             }
 
@@ -299,7 +301,7 @@ public class MainActivity extends BaseActivity implements DialogInterface {
 
                                 @Override
                                 public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                                    dialog.dismiss();
                                 }
                             });
                         } else {
@@ -317,7 +319,7 @@ public class MainActivity extends BaseActivity implements DialogInterface {
 
                     @Override
                     public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                        dialog.dismiss();
                     }
                 });
             }
