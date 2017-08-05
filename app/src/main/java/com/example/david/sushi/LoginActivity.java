@@ -87,7 +87,15 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                        YoYo.with(Techniques.Shake)
+                                .duration(500)
+                                .repeat(1).onEnd(new YoYo.AnimatorCallback() {
+                            @Override
+                            public void call(Animator animator) {
+                                pinLockView.resetPinLockView();
+                            }
+                        })
+                                .playOn(pinLockView);
                     }
                 });
 

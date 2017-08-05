@@ -65,6 +65,8 @@ public class BillActivity extends BaseActivity {
     TextView tvPrice;
     @BindView(R.id.tv_subtotal)
     TextView tvSubtotal;
+    @BindView(R.id.tv_service)
+    TextView tvService;
     @BindView(R.id.ib_back)
     ImageButton ibBack;
 
@@ -81,7 +83,7 @@ public class BillActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_activity_bill);
         ButterKnife.bind(this);
-        customizeFonts(bPay, tvName, tvNo, tvPrice, tvQuantity, tvSubtotal, tvTotal, tvTitle,tvDiskon,tvPpn,tvGrandTotal,tvNoMeja);
+        customizeFonts(bPay, tvName, tvNo, tvPrice, tvQuantity, tvSubtotal, tvTotal, tvTitle,tvDiskon,tvPpn,tvGrandTotal,tvNoMeja,tvService);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setListener();
         setView();
@@ -136,6 +138,8 @@ public class BillActivity extends BaseActivity {
                         tvTotal.setText(builderTotal);
                         SpannableStringBuilder builderGrandTotal = new SpannableStringBuilder(MessageFormat.format(getString(R.string.grand_total_harga), dataBon.getTrans().getGrandtotal()));
                         tvGrandTotal.setText(builderGrandTotal);
+                        SpannableStringBuilder builderService = new SpannableStringBuilder(MessageFormat.format(getString(R.string.service), dataBon.getTrans().getService()));
+                        tvService.setText(builderService);
                         SpannableStringBuilder builderNoMeja = new SpannableStringBuilder(MessageFormat.format(getString(R.string.no_meja),dataBon.getTrans().getNo_meja()));
                         tvNoMeja.setText(builderNoMeja);
                         SpannableStringBuilder builderDiskon= new SpannableStringBuilder(MessageFormat.format(getString(R.string.diskon), dataBon.getTrans().getDiskon()));
@@ -143,7 +147,7 @@ public class BillActivity extends BaseActivity {
                         SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.getTrans().getPpn()));
                         tvPpn.setText(builderPpn);
                     }catch (Exception e){
-
+                        System.out.println("ERROR: "+e.getMessage());
                     }
                     hideLoading();
                 }
@@ -151,7 +155,7 @@ public class BillActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                hideLoading();
             }
         });
 

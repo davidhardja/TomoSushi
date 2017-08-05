@@ -37,7 +37,8 @@ public interface ApiService {
             @Query("total_qty") String totalQty,
             @Query("creator") String creator,
             @Query("id_menu") String idMenu,
-            @Query("qty") String qty
+            @Query("qty") String qty,
+            @Query("modifiermenu") String keterangan
     );
 
     @GET("public/api/order/{no_meja}")

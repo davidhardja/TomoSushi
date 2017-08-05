@@ -18,7 +18,8 @@ public class Constant {
     public static String APP_VERSION = "0.1.1";
 
     // ============== APIs =========================
-    public static final String API_URL = "https://projek-it.com/pos/";
+    //public static final String API_URL = "https://projek-it.com/pos/";
+    public static final String API_URL = "http://192.168.137.1/pos/";
 
     // ============== Response Code =========================
     public static final String API_SUCCESS = "200";

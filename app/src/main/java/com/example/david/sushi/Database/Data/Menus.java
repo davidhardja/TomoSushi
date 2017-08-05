@@ -16,6 +16,8 @@ public class Menus extends BaseDao {
     private Integer harga;
     @DatabaseField
     private Integer quantity;
+    @DatabaseField
+    private String keterangan = "";
 
     public String getId() {
         return id;
@@ -47,5 +49,13 @@ public class Menus extends BaseDao {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
     }
 }

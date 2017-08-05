@@ -14,6 +14,7 @@ public class Trans extends BaseDao {
     private String diskon;
     private String ppn;
     private String grandtotal;
+    private String service;
     private String status;
     private String printed;
     private String count_print;
@@ -21,6 +22,14 @@ public class Trans extends BaseDao {
     private String kembalian;
     private String tipe_bayar;
     private String pembayaran;
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
 
     public String getId() {
         return id;

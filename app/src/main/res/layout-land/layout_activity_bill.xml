@@ -155,6 +155,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:text="grandt total"
         android:id="@+id/tv_grand_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,6 +168,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:text="ppn"
         android:id="@+id/tv_ppn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -179,6 +181,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:text="diskon"
         android:id="@+id/tv_diskon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -191,7 +194,8 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_total"
+        android:text="@string/service"
+        android:id="@+id/tv_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -203,6 +207,20 @@
         android:textStyle="bold" />
 
     <TextView
+        android:text="total"
+        android:id="@+id/tv_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@id/tv_service"
+        android:textColor="@color/c000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:text=""
         android:id="@+id/tv_no_meja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

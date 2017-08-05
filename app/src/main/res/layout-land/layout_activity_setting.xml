@@ -135,7 +135,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:inputType="number"
+            android:inputType="text"
             android:imeOptions="actionDone"
             android:id="@+id/et_no_meja"
             android:layout_width="0dp"

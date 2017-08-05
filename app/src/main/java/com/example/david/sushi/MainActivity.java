@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements DialogInterface {
 
             @Override
             public void onFailure(Call<CallbackWrapper> call, Throwable t) {
-
+                hideLoading();
             }
         });
 
