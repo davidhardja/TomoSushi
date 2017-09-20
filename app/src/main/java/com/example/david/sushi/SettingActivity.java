@@ -56,7 +56,7 @@ public class SettingActivity extends BaseActivity {
 
     private void setView(){
         etTimer.setText(String.valueOf(getSession().getTimer()/1000));
-        etBaseUrl.setText(Constant.API_URL);
+        etBaseUrl.setText(getSession().getBaseUrl());
         etWelcomeText.setText(getSession().getWelcomeText());
         etNoMeja.setText(getSession().getNoMeja());
     }
@@ -68,6 +68,8 @@ public class SettingActivity extends BaseActivity {
                 getSession().setWelcomeText(etWelcomeText.getText().toString());
                 getSession().setNoMeja(etNoMeja.getText().toString());
                 getSession().setTimer(Long.valueOf(etTimer.getText().toString())*1000);
+                getSession().setBaseUrl(etBaseUrl.getText().toString());
+                ((Application) getApplication()).changeBaseUrl();
                 finish();
             }
         });

@@ -22,6 +22,8 @@ public class Application extends MultiDexApplication {
     private ApiService service;
     private DatabaseHelper helper;
     private SessionManagement session;
+    private Retrofit retrofit;
+    OkHttpClient client;
 
     @Override
     public void onCreate() {
@@ -29,10 +31,12 @@ public class Application extends MultiDexApplication {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.API_URL)
+        session = new SessionManagement(this);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getSession().getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
@@ -40,14 +44,21 @@ public class Application extends MultiDexApplication {
         service = retrofit.create(ApiService.class);
 
         helper = new DatabaseHelper(this);
-
-        session = new SessionManagement(this);
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public void changeBaseUrl(){
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getSession().getBaseUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        service = retrofit.create(ApiService.class);
     }
 
     public ApiService getService() {
