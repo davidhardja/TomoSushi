@@ -38,7 +38,10 @@ public interface ApiService {
             @Query("creator") String creator,
             @Query("id_menu") String idMenu,
             @Query("qty") String qty,
-            @Query("modifiermenu") String keterangan
+            @Query("modifiermenu") String keterangan,
+            @Query("persons") Integer persons,
+            @Query("jenis") String jenis,
+            @Query("takeaway") Integer takeaway
     );
 
     @GET("public/api/order/{no_meja}")
@@ -65,9 +68,11 @@ public interface ApiService {
             @Query("password") String password
     );
 
-    @GET("public/api/getbon/{no_meja}/yes")
+    @GET("public/api/getbon/{no_meja}/yes/{creator}/{jenis}")
     Call<CallbackWrapper> getReceipt(
-            @Path("no_meja") String noMeja
+            @Path("no_meja") String noMeja,
+            @Path("creator") String creator,
+            @Path("jenis") String jenis
     );
 
     @GET("public/api/cekstatusmeja/{no_meja}")

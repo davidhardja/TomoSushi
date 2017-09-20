@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.david.sushi.Common.Constant;
 import com.example.david.sushi.Database.Data.Menus;
 import com.example.david.sushi.R;
@@ -67,7 +68,8 @@ public class MenuAdapter extends BaseAdapter {
             tvName.setText(menus.getName());
             SpannableStringBuilder builder = new SpannableStringBuilder(MessageFormat.format(context.getString(R.string.rupiah), menus.getHarga()));
             tvPrice.setText(builder);
-            ivMenu.setImageResource(R.drawable.ic_sushi);
+            Glide.with(context).load(menus.getPicture_url()).placeholder(R.drawable.ic_sushi).into(ivMenu);
+//            ivMenu.setImageResource(R.drawable.ic_sushi);
         }
 
         @Override
@@ -89,6 +91,7 @@ public class MenuAdapter extends BaseAdapter {
             TextView tvDescription = (TextView) dialog.findViewById(R.id.tv_description);
             TextView tvQuantity = (TextView) dialog.findViewById(R.id.tv_quantity);
             final EditText etNote = (EditText) dialog.findViewById(R.id.et_note);
+            ImageView ivMenu = (ImageView) dialog.findViewById(R.id.iv_menu);
 
             AutofitHelper.create(tvName);
             AutofitHelper.create(tvDescription);
@@ -101,8 +104,10 @@ public class MenuAdapter extends BaseAdapter {
             final Menus menus = menusList.get(getAdapterPosition());
             final Menus temp = new Menus();
 
+            Glide.with(context).load(menus.getPicture_url()).placeholder(R.drawable.ic_sushi).into(ivMenu);
+
             tvName.setText(menus.getName());
-            tvDescription.setText("");
+            tvDescription.setText(menus.getKeterangan());
 
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,11 +131,11 @@ public class MenuAdapter extends BaseAdapter {
 
                     if (find) {
                         Constant.cart.get(position).setQuantity(Constant.cart.get(position).getQuantity() + Integer.valueOf(etQuantity.getText().toString()));
-                        Constant.cart.get(position).setKeterangan(etNote.getText().toString());
+                        Constant.cart.get(position).setModifier(etNote.getText().toString());
                     } else {
                         if (Integer.valueOf(etQuantity.getText().toString()) > 0) {
                             menus.setQuantity(Integer.valueOf(etQuantity.getText().toString()));
-                            menus.setKeterangan(etNote.getText().toString());
+                            menus.setModifier(etNote.getText().toString());
                             Constant.cart.add(menus);
                         }
                     }

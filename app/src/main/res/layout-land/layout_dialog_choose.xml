@@ -17,6 +17,7 @@
             android:id="@+id/iv_menu"
             android:layout_width="470dp"
             android:layout_marginBottom="30dp"
+            android:scaleType="centerCrop"
             android:layout_marginTop="30dp"
             android:layout_marginStart="30dp"
             android:layout_height="match_parent"
@@ -42,17 +43,23 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="SUSHI A"
-                android:textColor="@color/c959595"
+                android:textColor="@color/c000000"
                 android:textSize="24sp" />
+
+            <View
+                android:layout_margin="5dp"
+                android:background="@color/cfffff"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
             <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center|top"
                 android:text="is simply dummy text of the printing and typesetting industry asdsa  asdsa asd"
-                android:textColor="@color/c959595"
+                android:textColor="@color/c000000"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -71,7 +78,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/quantity"
-                    android:textColor="@color/c959595" />
+                    android:textColor="@color/c000000" />
 
                 <EditText
                     android:textColor="@color/c959595"

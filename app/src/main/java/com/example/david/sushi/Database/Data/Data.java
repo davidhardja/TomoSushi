@@ -19,7 +19,7 @@ public class Data extends BaseDao {
     private String additional;
     private String harga;
     private String Id_category_menu;
-    private String Keterangan;
+    private String keterangan;
     private String qty;
     private String picture_url;
 
@@ -91,11 +91,11 @@ public class Data extends BaseDao {
     }
 
     public String getKeterangan() {
-        return Keterangan;
+        return keterangan;
     }
 
     public void setKeterangan(String keterangan) {
-        Keterangan = keterangan;
+        keterangan = keterangan;
     }
 
     public String getCreator() {

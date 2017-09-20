@@ -27,7 +27,7 @@ public class Constant {
 
     // ============== Database =====================
     public static String DATABASE_NAME = "Tomo_sushi_database";
-    public static int DATABASE_VERSION = 1 ;
+    public static int DATABASE_VERSION = 3 ;
     public static String DAO_PACKAGE_NAME = "com.example.david.sushi.database.Data";
 
     //Font
@@ -46,7 +46,7 @@ public class Constant {
     public static MainActivity mainActivity;
 
     //Id Table
-    public static String ID_MEJA = "1";
+    public static String ID_MEJA = "A1";
 
     //Status Meja
     public static String AVAILABLE = "1";

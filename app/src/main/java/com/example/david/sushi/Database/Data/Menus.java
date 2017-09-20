@@ -18,6 +18,26 @@ public class Menus extends BaseDao {
     private Integer quantity;
     @DatabaseField
     private String keterangan = "";
+    @DatabaseField
+    private String picture_url = "";
+    @DatabaseField
+    private String modifier = "";
+
+    public String getModifier() {
+        return modifier;
+    }
+
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
+    }
+
+    public String getPicture_url() {
+        return picture_url;
+    }
+
+    public void setPicture_url(String picture_url) {
+        this.picture_url = picture_url;
+    }
 
     public String getId() {
         return id;

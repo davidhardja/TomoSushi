@@ -88,8 +88,8 @@ public class CartActivity extends BaseActivity {
     int totalQty = 0;
     String idMenu ="";
     String qty = "";
-    String creator = "Meja 1";
-    String keterangan = "";
+    String creator = "";
+    String modifier = "";
 
     private void showProcess() {
         final Dialog dialog = new Dialog(this, R.style.StyleDialog);
@@ -122,7 +122,7 @@ public class CartActivity extends BaseActivity {
                     totalQty = totalQty+ menusList.get(i).getQuantity();
                     idMenu = idMenu+menusList.get(i).getId() +"||";
                     qty = qty+ menusList.get(i).getQuantity()+"||";
-                    keterangan = keterangan + menusList.get(i).getKeterangan()+"||";
+                    modifier = modifier + menusList.get(i).getModifier()+"||";
                 }
 
                 System.out.println("CHECK PARAMETER: "+ totalQty);
@@ -130,7 +130,7 @@ public class CartActivity extends BaseActivity {
                 System.out.println("CHECK PARAMETER: "+ qty);
 
 
-                Call<CallbackWrapper> orderCall = getService().postOrder(getSession().getNoMeja(),String.valueOf(totalQty),creator,idMenu,qty,keterangan);
+                Call<CallbackWrapper> orderCall = getService().postOrder(getSession().getNoMeja(),String.valueOf(totalQty), getSession().getNoMeja(),idMenu,qty,modifier,0,"DINE_IN",0);
                 orderCall.enqueue(new Callback<CallbackWrapper>() {
                     @Override
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {

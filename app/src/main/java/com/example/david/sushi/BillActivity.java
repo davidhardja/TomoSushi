@@ -116,7 +116,7 @@ public class BillActivity extends BaseActivity {
         //menusList.addAll(Constant.bill);
 
         showLoading();
-        Call<CallbackWrapper> call = getService().getReceipt(getSession().getNoMeja());
+        Call<CallbackWrapper> call = getService().getReceipt(getSession().getNoMeja(),getSession().getNoMeja(),"DINE_IN");
         call.enqueue(new Callback<CallbackWrapper>() {
             @Override
             public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
