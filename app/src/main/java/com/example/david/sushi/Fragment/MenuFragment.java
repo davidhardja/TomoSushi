@@ -85,7 +85,6 @@ public class MenuFragment extends BaseFragment {
                         m.setName(dataList.get(i).getNama());
                         m.setHarga(Integer.valueOf(dataList.get(i).getHarga()));
                         m.setPicture_url(dataList.get(i).getPicture_url());
-                        System.out.println("CHECK KETERANGAN: "+ dataList.get(i).getKeterangan());
                         m.setKeterangan(dataList.get(i).getKeterangan());
                         m.setQuantity(0);
                         menusList.add(m);

@@ -77,7 +77,8 @@ public class WelcomeActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
-
+                        Toast.makeText(WelcomeActivity.this, getString(R.string.table_not_available),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
             }

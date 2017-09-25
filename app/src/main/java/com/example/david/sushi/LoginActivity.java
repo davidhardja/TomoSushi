@@ -87,6 +87,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(Call<CallbackWrapper> call, Throwable throwable) {
+                        hideLoading();
                         YoYo.with(Techniques.Shake)
                                 .duration(500)
                                 .repeat(1).onEnd(new YoYo.AnimatorCallback() {

@@ -122,7 +122,6 @@ public class BillActivity extends BaseActivity {
             public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
                 if(response.isSuccessful()){
                     DataBon dataBon = response.body().getDataBon();
-                    System.out.println("CHECK SIZE BON: "+ response.body().getDataBon().getOrder().size());
                     List<Order> orderList = dataBon.getOrder();
                     for (int i=0;i<orderList.size();i++){
                         Menus menu = new Menus();
@@ -147,8 +146,10 @@ public class BillActivity extends BaseActivity {
                         SpannableStringBuilder builderPpn = new SpannableStringBuilder(MessageFormat.format(getString(R.string.ppn), dataBon.getTrans().getPpn()));
                         tvPpn.setText(builderPpn);
                     }catch (Exception e){
-                        System.out.println("ERROR: "+e.getMessage());
+
                     }
+                    hideLoading();
+                }else{
                     hideLoading();
                 }
             }

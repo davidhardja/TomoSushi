@@ -125,19 +125,14 @@ public class CartActivity extends BaseActivity {
                     modifier = modifier + menusList.get(i).getModifier()+"||";
                 }
 
-                System.out.println("CHECK PARAMETER: "+ totalQty);
-                System.out.println("CHECK PARAMETER: "+ idMenu);
-                System.out.println("CHECK PARAMETER: "+ qty);
-
-
                 Call<CallbackWrapper> orderCall = getService().postOrder(getSession().getNoMeja(),String.valueOf(totalQty), getSession().getNoMeja(),idMenu,qty,modifier,0,"DINE_IN",0);
                 orderCall.enqueue(new Callback<CallbackWrapper>() {
                     @Override
                     public void onResponse(Call<CallbackWrapper> call, Response<CallbackWrapper> response) {
                         if(response.isSuccessful()){
-                            System.out.println("RESPONSE: "+ response.body());
+
                         }else{
-                            System.out.println("RESPONSE ERROR: "+ response.errorBody());
+
                         }
                     }
 
